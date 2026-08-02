@@ -838,14 +838,12 @@ function buildGallery(filter) {
 function openCategory(filter) {
   document.getElementById('categoryGrid').style.display = 'none';
   document.getElementById('backBtn').style.display = 'block';
-  document.querySelector('.gallery-filters').style.display = 'none';
   buildGallery(filter);
 }
 
 function closeCategory() {
   document.getElementById('categoryGrid').style.display = 'grid';
   document.getElementById('backBtn').style.display = 'none';
-  document.querySelector('.gallery-filters').style.display = 'flex';
   grid.innerHTML = '';
 }
 // ── Filter buttons
