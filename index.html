@@ -227,6 +227,23 @@
     display: flex;
     gap: 1.5rem;
   }
+ .category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  padding: 0 3px;
+  margin-bottom: 3px;
+}
+@media (max-width: 768px) {
+  .category-grid { grid-template-columns: 1fr; }
+}
+.category-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  height: 350px;
+}
+...etc
   .filter-btn {
     background: none;
     border: none;
@@ -641,14 +658,37 @@
     </div>
     <div class="gallery-filters">
       <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="iceland">Iceland</button>
-        <button class="filter-btn" data-filter="southoffrance">South of France</button>
-        <button class="filter-btn" data-filter="alpes">Alpes</button>
-        <button class="filter-btn" data-filter="madeira">Madeira</button>
+      <button class="filter-btn" data-filter="iceland">Iceland</button>
+      <button class="filter-btn" data-filter="southoffrance">South of France</button>
+      <button class="filter-btn" data-filter="alpes">Alpes</button>
     </div>
   </div>
 
-  <div class="gallery-grid" id="galleryGrid"></div>
+ <div class="category-grid" id="categoryGrid">
+  <div class="category-card" onclick="openCategory('iceland')">
+    <img src="IMG_2548.jpeg" alt="Iceland">
+    <div class="category-card-label">
+      <span>Explore</span>
+      <h3>Iceland</h3>
+    </div>
+  </div>
+  <div class="category-card" onclick="openCategory('southoffrance')">
+    <img src="IMG_4014_hdr.jpg" alt="South of France">
+    <div class="category-card-label">
+      <span>Explore</span>
+      <h3>South of France</h3>
+    </div>
+  </div>
+  <div class="category-card" onclick="openCategory('alpes')">
+    <img src="IMG_4046_1.jpg" alt="Alpes">
+    <div class="category-card-label">
+      <span>Explore</span>
+      <h3>Alpes</h3>
+    </div>
+  </div>
+</div>
+<button class="back-btn" id="backBtn" onclick="closeCategory()">← Back to galleries</button>
+<div class="gallery-grid" id="galleryGrid"></div>
 </section>
 
 <!-- LIGHTBOX -->
@@ -711,16 +751,15 @@
 <script>
 // ── Photo data (replace src with your own images)
 const photos = [
-  { src: './IMG_3334_hdr.jpg',                          title: 'Reynisfjara Beach',    loc: 'Iceland',  category: 'iceland'      },
-  { src: './IMG_2548.jpeg',                             title: 'Kirkjufell',           loc: 'Iceland',  category: 'iceland' },
-  { src: './4C4EE1BB-4210-4973-A3C9-15C76BBD112B.jpeg', title: 'Jokulsarlon Sunset',  loc: 'Iceland',  category: 'iceland'    },
-  { src: './IMG_3366.jpg',                              title: 'Vik',                  loc: 'Iceland',  category: 'iceland'      },
-  { src: './IMG_2930.jpeg',                             title: 'Seljalandsfoss',       loc: 'Iceland',  category: 'iceland' },
-  { src: './IMG_3998_hdr.jpg',                          title: 'Esterel',              loc: 'France',   category: 'southoffrance'   },
-  { src: './IMG_4014_hdr.jpg',                          title: 'Six-fours-les-plages', loc: 'France',   category: 'southoffrance'      },
-  { src: './IMG_4058_hdr.jpg',                          title: 'Lakes Robert',         loc: 'France',   category: 'alpes'   },
-  { src: './IMG_4064.jpg',                              title: 'Lakes Robert',         loc: 'France',   category: 'alpes'   },
-  { src: './IMG_4046_1.jpg',                            title: 'Lakes Robert',         loc: 'France',   category: 'alpes'   },
+  { src: 'IMG_2548.jpeg', title: 'Kirkjufell', loc: 'Iceland', category: 'iceland' },
+  { src: '4C4EE1BB-4210-4973-A3C9-15C76BBD112B.jpeg', title: 'Jokulsarlon Sunset', loc: 'Iceland', category: 'iceland' },
+  { src: 'IMG_2930.jpeg', title: 'Seljalandsfoss', loc: 'Iceland', category: 'iceland' },
+  { src: '_MG_3334_hdr.jpg', title: 'Reynisfjara Beach', loc: 'Iceland', category: 'iceland' },
+  { src: 'IMG_4014_hdr.jpg', title: 'Six-fours-les-plages', loc: 'South of France', category: 'southoffrance' },
+  { src: 'IMG_3998_hdr.jpg', title: 'Esterel', loc: 'South of France', category: 'southoffrance' },
+  { src: 'IMG_4046_1.jpg', title: 'Alpes', loc: 'Alpes', category: 'alpes' },
+  { src: 'IMG_4058_hdr.jpg', title: 'Alpes', loc: 'Alpes', category: 'alpes' },
+  { src: 'IMG_4064.jpg', title: 'Alpes', loc: 'Alpes', category: 'alpes' },
 ];
 
 // ── Build gallery
@@ -749,6 +788,20 @@ function buildGallery(filter) {
   });
 }
 
+ // ── Category navigation
+function openCategory(filter) {
+  document.getElementById('categoryGrid').style.display = 'none';
+  document.getElementById('backBtn').style.display = 'block';
+  document.querySelector('.gallery-filters').style.display = 'none';
+  buildGallery(filter);
+}
+
+function closeCategory() {
+  document.getElementById('categoryGrid').style.display = 'grid';
+  document.getElementById('backBtn').style.display = 'none';
+  document.querySelector('.gallery-filters').style.display = 'flex';
+  grid.innerHTML = '';
+}
 // ── Filter buttons
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
