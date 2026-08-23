@@ -733,7 +733,14 @@
     </div>
   </div>
 </div>
-<button class="back-btn" id="backBtn" onclick="closeCategory()">← Back to galleries</button>
+<div class="category-card" onclick="openCategory('madeira')">
+  <img src="Pico_Arieiro.jpg" alt="Madeira">
+  <div class="category-card-label">
+    <span>Explore</span>
+    <h3>Madeira</h3>
+  </div>
+</div>
+ <button class="back-btn" id="backBtn" onclick="closeCategory()">← Back to galleries</button>
 <div class="gallery-grid" id="galleryGrid"></div>
 </section>
 
@@ -807,6 +814,9 @@ const photos = [
   { src: 'IMG_4058_hdr.jpg', title: 'Alpes', loc: 'Alpes', category: 'alpes' },
   { src: 'IMG_4064.jpg', title: 'Alpes', loc: 'Alpes', category: 'alpes' },
   { src: 'IMG_4007_hdr_2.jpg', title: 'Six-fours-les-plages', loc: 'South of France', category: 'southoffrance' },
+  { src: 'Pico_Arieiro.jpg', title: 'Pico Arieiro', loc: 'Madeira', category: 'madeira' },
+  { src: 'Ribiera_da_Janela.jpg', title: 'Ribiera da Janela', loc: 'Madeira', category: 'madeira' },
+  
 ];
 
 // ── Build gallery
