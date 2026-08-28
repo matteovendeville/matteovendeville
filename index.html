@@ -853,6 +853,9 @@ function openCategory(filter) {
   document.getElementById('categoryGrid').style.display = 'none';
   document.getElementById('backBtn').style.display = 'block';
   buildGallery(filter);
+  if (window.innerWidth <= 768) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
 }
 
 function closeCategory() {
