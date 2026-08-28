@@ -133,7 +133,7 @@
   .hero-bg {
     position: absolute;
     inset: 0;
-    background: url('Pico_Arieiro.jpg') center/cover no-repeat;
+    background: #000 center/cover no-repeat;
     transform: scale(1.06);
     transition: transform 8s ease;
     filter: brightness(0.65);
@@ -927,9 +927,27 @@ window.addEventListener('scroll', () => {
 });
 
 // ── Hero image reveal
-window.addEventListener('load', () => {
-  document.getElementById('heroBg').classList.add('loaded');
-});
+function setHeroFromLastHorizontal() {
+  const heroBg = document.getElementById('heroBg');
+  let i = photos.length - 1;
+  function tryNext() {
+    if (i < 0) return;
+    const testImg = new Image();
+    testImg.onload = () => {
+      if (testImg.naturalWidth > testImg.naturalHeight) {
+        heroBg.style.backgroundImage = `url('${photos[i].src}')`;
+        heroBg.classList.add('loaded');
+      } else {
+        i--;
+        tryNext();
+      }
+    };
+    testImg.onerror = () => { i--; tryNext(); };
+    testImg.src = photos[i].src;
+  }
+  tryNext();
+}
+setHeroFromLastHorizontal();
 
 // ── Intersection observer for gallery items
 const io = new IntersectionObserver((entries) => {
